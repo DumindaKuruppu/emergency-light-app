@@ -1,16 +1,20 @@
 package com.example.emergencylightapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
-//    Declaring layout elements
+    //    Declaring layout elements
     private Button btnTurnOn;
+
+    private TextView txtViewAbout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,9 +33,25 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        txtViewAbout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "Long tap to view About the developers", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        txtViewAbout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(MainActivity.this, "This app is developed by CST students", Toast.LENGTH_SHORT).show();
+                return false;
+            }
+        });
+
     }
 
     private void initializedViews() {
         btnTurnOn = findViewById(R.id.btnTurnOn);
+        txtViewAbout = findViewById(R.id.txtViewAbout);
     }
 }

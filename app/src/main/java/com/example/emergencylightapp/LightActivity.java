@@ -1,8 +1,5 @@
 package com.example.emergencylightapp;
 
-import androidx.annotation.RequiresApi;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -14,13 +11,19 @@ import android.hardware.camera2.CameraAccessException;
 import android.hardware.camera2.CameraManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class LightActivity extends AppCompatActivity implements SensorEventListener {
 
 
     //    Declaring layout elements
     private TextView textViewLuxValue, textViewTorchMode;
+    private ImageView imgViewTorchOn, imgViewTorchOff;
 
     //    Declaring sensor elements
     private SensorManager sensorManager;
@@ -37,7 +40,6 @@ public class LightActivity extends AppCompatActivity implements SensorEventListe
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
     }
-
 
 
     @Override
@@ -57,17 +59,21 @@ public class LightActivity extends AppCompatActivity implements SensorEventListe
     @Override
     public void onSensorChanged(SensorEvent SensorEvent) {
         changedValues = SensorEvent.values[0];
-        textViewLuxValue.setText(String.valueOf(changedValues));
+        textViewLuxValue.setText("LUX Value: " + changedValues);
 
         if (changedValues < 15) {
 
             flashSwitch(true);
             textViewTorchMode.setText("Flash Light is On");
+            imgViewTorchOff.setVisibility(View.GONE);
+            imgViewTorchOn.setVisibility(View.VISIBLE);
 
         } else {
 
             flashSwitch(false);
             textViewTorchMode.setText("Flash Light is Off");
+            imgViewTorchOff.setVisibility(View.VISIBLE);
+            imgViewTorchOn.setVisibility(View.GONE);
         }
 
 
@@ -89,6 +95,8 @@ public class LightActivity extends AppCompatActivity implements SensorEventListe
     private void initializedViews() {
         textViewLuxValue = findViewById(R.id.txtViewLuxValue);
         textViewTorchMode = findViewById(R.id.txtViewTorchMode);
+        imgViewTorchOn = findViewById(R.id.imgViewTorchOn);
+        imgViewTorchOff = findViewById(R.id.imgViewTorchOff);
 
     }
 
