@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.EmergencyLightApp">
         <activity
+            android:name=".LightActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
