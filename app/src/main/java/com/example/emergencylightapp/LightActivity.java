@@ -43,6 +43,8 @@ public class LightActivity extends AppCompatActivity implements SensorEventListe
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
 
+
+        seekBarLuxThreshold.setProgress(((int) luxThreshold));
         seekBarLuxThreshold.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
