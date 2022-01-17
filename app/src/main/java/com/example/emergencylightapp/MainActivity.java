@@ -53,5 +53,6 @@ public class MainActivity extends AppCompatActivity {
     private void initializedViews() {
         btnTurnOn = findViewById(R.id.btnTurnOn);
         txtViewAbout = findViewById(R.id.txtViewAbout);
+
     }
 }

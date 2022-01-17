@@ -13,6 +13,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.RequiresApi;
@@ -22,13 +23,15 @@ public class LightActivity extends AppCompatActivity implements SensorEventListe
 
 
     //    Declaring layout elements
-    private TextView textViewLuxValue, textViewTorchMode;
+    private TextView textViewLuxValue, textViewTorchMode, textViewLuxThreshold;
     private ImageView imgViewTorchOn, imgViewTorchOff;
+    private SeekBar seekBarLuxThreshold;
 
     //    Declaring sensor elements
     private SensorManager sensorManager;
     private Sensor lightSensor;
-    private float changedValues;
+    private float changedValues, luxThreshold = 15;
+
 
 
     @Override
@@ -39,6 +42,24 @@ public class LightActivity extends AppCompatActivity implements SensorEventListe
         initializedViews();
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         lightSensor = sensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
+
+        seekBarLuxThreshold.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                textViewLuxThreshold.setText("Lux Threshold : " + progress);
+                luxThreshold = progress;
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
     }
 
 
@@ -61,7 +82,7 @@ public class LightActivity extends AppCompatActivity implements SensorEventListe
         changedValues = SensorEvent.values[0];
         textViewLuxValue.setText("LUX Value: " + changedValues);
 
-        if (changedValues < 15) {
+        if (changedValues < luxThreshold) {
 
             flashSwitch(true);
             textViewTorchMode.setText("Flash Light is On");
@@ -97,6 +118,8 @@ public class LightActivity extends AppCompatActivity implements SensorEventListe
         textViewTorchMode = findViewById(R.id.txtViewTorchMode);
         imgViewTorchOn = findViewById(R.id.imgViewTorchOn);
         imgViewTorchOff = findViewById(R.id.imgViewTorchOff);
+        textViewLuxThreshold = findViewById(R.id.textViewLuxThreshold);
+        seekBarLuxThreshold = findViewById(R.id.seekBarLuxThreshold);
 
     }
 
